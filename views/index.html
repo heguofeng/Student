@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{{title}}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/vue.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/index.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        <h1><a href="/">学生管理系统</a></h1>
+        <div class="main_menu clearfix">
+            <div class="dropdown fl">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    菜单
+                 <span class="caret"></span>
+             </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a href="javascript:;" id="fileSave">保存</a></li>
+                    <li><a href="#">另存为...</a></li>
+                    <li><a href="#">打开...</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">退出</a></li>
+                </ul>
+            </div>
+            <button class="btn btn-primary fl btn_left" type="button" id="add"> 新建 </button>
+        </div>
+        <div class="main_table">
+            <table class="table table-bordered" id="student-list">
+                <tr style="text-align: center;">
+                    <th style="text-align: center;">学院名称</th>
+                    <th style="text-align: center;">姓名</th>
+                    <th style="text-align: center;">年龄</th>
+                    <th style="text-align: center;">性别</th>
+                    <th style="text-align: center;">学号</th>
+                    <th style="text-align: center;">操作</th>
+                </tr>
+                <tr v-for="student in students">
+                    <td v-text="student.college"></td>
+                    <td v-text="student.name"></td>
+                    <td v-text="student.age"></td>
+                    <td v-text="student.sex"></td>
+                    <td v-text="student.student_id"></td>
+                    <td>
+                        <button class="btn btn-info fl btn_left update" type="button" v-on:click="putStudent(student._id)"> 修改 </button>
+                        <button class="btn btn-danger fl btn_left delete" type="button" v-on:click="deleteStudent(student._id)"> 刪除 </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="add_box" id="add_box">
+        <form class="form-horizontal" id="student-form" v-on:submit.prevent="submitForm">
+            <div class="form-group">
+                <label for="college" class="col-sm-4 control-label">学院名称</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="college" name="college" placeholder="学院名称" v-model="student.college">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-4 control-label">姓名</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="姓名" v-model="student.name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-4 control-label">性别</label>
+                <div class="col-sm-6">
+                    <select class="form-control" id="sex" name="sex" v-model="student.sex">
+                        <option disabled value="">请选择</option>
+                        <option >男</option> 
+                        <option >女</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="age" class="col-sm-4 control-label">年龄</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="age" name="age" placeholder="年龄" v-model='student.age'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="student_id" class="col-sm-4 control-label">学号</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="student_id" name="student_id" placeholder="学号" v-model="student.student_id">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success save" id="save">保存</button>
+
+        </form>
+        <button type="button" class="close guanbi" aria-label="Close" id="close"><span aria-hidden="true">&times;</span></button>
+    </div>
+
+    <!-- 修改 -->
+    <div class="add_box" id="put_box">
+        <form class="form-horizontal" id="app2" v-on:submit.prevent="updateForm(student._id)">
+            <div class="form-group">
+                <label for="college" class="col-sm-4 control-label">学院名称</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="college" name="college" placeholder="学院名称" v-model="student.college">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="name" class="col-sm-4 control-label">姓名</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="姓名" v-model="student.name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-4 control-label">性别</label>
+                <div class="col-sm-6">
+                    <select class="form-control" id="sex" name="sex" v-model="student.sex">
+                            <option disabled value="">请选择</option>
+                            <option >男</option>
+                            <option >女</option>
+                        </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="age" class="col-sm-4 control-label">年龄</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="age" name="age" placeholder="年龄" v-model='student.age'>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="student_id" class="col-sm-4 control-label">学号</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="student_id" name="student_id" placeholder="学号" v-model="student.student_id">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success save" id="save">修改</button>
+        </form>
+        <button type="button" class="close guanbi" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    </div>
+</body>
+
+</html>

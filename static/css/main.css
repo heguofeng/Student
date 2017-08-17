@@ -1,0 +1,56 @@
+* {
+    padding: 0 0;
+    margin: 0 0;
+}
+
+.main {
+    border: 1px solid #ececec;
+    position: fixed;
+    display: block;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 500px;
+    text-align: center;
+    padding: 5px;
+    overflow: auto;
+    /* margin: 0 auto; */
+}
+
+.main_menu {
+    margin-bottom: 10px;
+}
+
+.fl {
+    float: left;
+}
+
+.btn_left {
+    margin-left: 15px
+}
+
+.add_box {
+    width: 400px;
+    /* height: 600px; */
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #ccc;
+    padding: 20px 0;
+    text-align: center;
+    z-index: 999;
+    display: none;
+}
+
+.guanbi {
+    position: absolute;
+    top: 7px;
+    right: 8px;
+    display: block;
+}
+
+.block {
+    display: block;
+}
