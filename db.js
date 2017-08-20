@@ -67,6 +67,7 @@ module.exports = {
                 console.log("删除成功：" + docs);
             }
         });
+
     },
     putStudent: (id, college, name, sex, age, student_id) => {
         StudentModel.findOneAndUpdate({ _id: id }, { $set: { college: college, name: name, sex: sex, age: age, student_id: student_id } }, function(err, docs) {
@@ -86,6 +87,15 @@ module.exports = {
             }
         });
         return data;
+    },
+    delAllStudents: () => {
+        StudentModel.remove({}, function(err, docs) {
+            if (err) {
+                console.log("删除失败" + err);
+            } else {
+                console.log("删除成功" + docs);
+            }
+        });
     }
 
 

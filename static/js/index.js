@@ -1,11 +1,12 @@
 $(function() {
     //初次加载数据
     function newLoad() {
-        $.getJSON('/api/students').done(function(data) {
+        $.getJSON('http://127.0.0.1:3000/api/students').done(function(data) {
             vm.students = data.students;
         }).fail(function(jqXHR, textStatus) {
             alert('Error: ' + jqXHR.status);
         });
+
     }
     newLoad();
     //点击新建与叉叉
@@ -137,7 +138,23 @@ $(function() {
             }
         }
     });
-
+    $("#deleteAll").click(function() {
+        $.getJSON('/api/students').done(function(data) {
+            vm.students = data.students;
+        }).fail(function(jqXHR, textStatus) {
+            alert('Error: ' + jqXHR.status);
+        });
+        $.ajax({
+            type: "delete",
+            dataType: "json",
+            url: '/api/delAllStudents'
+        }).done(function(r) {
+            alert(r.result);
+            newLoad();
+        }).fail(function(jqXHR) {
+            alert("删除失败" + jqXHR.status);
+        });
+    });
 
     //加载结束标签
 });

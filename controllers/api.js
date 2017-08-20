@@ -4,9 +4,13 @@ const APIError = require('../rest').APIError;
 module.exports = {
 
     'GET /api/students': async(ctx, next) => {
-        ctx.rest({
-            students: await db.getStudents()
-        });
+        var data = await db.getStudents();
+        if (data != undefined) {
+            ctx.rest({
+                students: data
+            });
+        }
+
     },
     'POST /api/student': async(ctx, next) => {
         ctx.rest({
@@ -24,6 +28,7 @@ module.exports = {
         ctx.rest({
             result: "删除成功"
         });
+
     },
     'PUT /api/student/:id': async(ctx, next) => {
         console.log(`修改学生：${ctx.params.id}`);
@@ -44,6 +49,13 @@ module.exports = {
             student: await db.getStudentById(
                 ctx.params.id,
             )
+        });
+    },
+    'DELETE /api/delAllStudents': async(ctx, next) => {
+        console.log("删除所有学生");
+        db.delAllStudents();
+        ctx.rest({
+            result: "删除所有数据成功"
         });
     }
 };
